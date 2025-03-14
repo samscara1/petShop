@@ -9,27 +9,37 @@ public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true, nullable = false)
+    private String sku;
     private String title;
     private String description;
     private int price;
 
-    public Article(long id, String title, String description, int price) {
+    public Article() {
+    }
+
+    public Article(long id, String sku, String title, String description, int price) {
         this.id = id;
+        this.sku = sku;
         this.title = title;
         this.description = description;
         this.price = price;
     }
 
-    public Article() {
-
-    }
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getSku() {
+        return sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
     }
 
     public String getTitle() {
@@ -60,6 +70,7 @@ public class Article {
     public String toString() {
         return "Article{" +
                 "id=" + id +
+                ", sku='" + sku + '\'' +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
