@@ -28,4 +28,12 @@ public class ArticleService {
         }
         return this.articleRepository.save(article);
     }
+
+    public void delete(Long id) {
+        Optional<Article> ById = articleRepository.findById(id);
+        if (ById.isEmpty()) {
+            throw new IllegalStateException("Article does not exist");
+        }
+        articleRepository.deleteById(id);
+    }
 }
