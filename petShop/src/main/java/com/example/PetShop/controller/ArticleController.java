@@ -25,4 +25,9 @@ public class ArticleController {
     public Article createArticle(@RequestBody Article article) {
         return articleService.createArticle(article);
     }
+
+    @DeleteMapping(path = "{id}")
+    public void deleteArticle(@PathVariable Long id) {
+        articleService.delete(id);
+    }
 }
