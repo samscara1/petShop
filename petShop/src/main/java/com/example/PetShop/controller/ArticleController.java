@@ -26,8 +26,19 @@ public class ArticleController {
         return articleService.createArticle(article);
     }
 
-    @DeleteMapping(path = "{id}")
+    @DeleteMapping(path = "delete/{id}")
     public void deleteArticle(@PathVariable Long id) {
         articleService.delete(id);
+    }
+
+    @PutMapping(path = "update/{id}")
+    public void updateArticle(
+            @PathVariable Long id,
+            @RequestParam(required = false) String sku,
+            @RequestParam(required = false)String title,
+            @RequestParam(required = false)String description,
+            @RequestParam(required = false)Integer price
+    ) {
+        articleService.update(id, sku, title, description, price);
     }
 }

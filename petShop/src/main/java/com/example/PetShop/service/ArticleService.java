@@ -36,4 +36,35 @@ public class ArticleService {
         }
         articleRepository.deleteById(id);
     }
+
+    public void update(Long id, String sku, String title, String description, Integer price) {
+        Optional<Article> ById = articleRepository.findById(id);
+        if (ById.isEmpty()) {
+            throw new IllegalStateException("Article does not exist");
+        }
+        Article article = ById.get();
+        boolean updated = false;
+
+        if (sku != null && !sku.equals(article.getSku())) {
+            article.setSku(sku);
+            updated = true;
+        }
+        if (title != null && !title.equals(article.getTitle())) {
+            article.setTitle(title);
+            updated = true;
+        }
+        if (description != null && !description.equals(article.getDescription())) {
+            article.setDescription(description);
+            updated = true;
+        }
+        if (price != null && price > 0 && price != article.getPrice()) {
+            article.setPrice(price);
+            updated = true;
+        }
+
+        if (updated) {
+            articleRepository.save(article);
+        }
+
+    }
 }
