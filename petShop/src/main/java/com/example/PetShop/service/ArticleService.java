@@ -2,6 +2,7 @@ package com.example.PetShop.service;
 
 import com.example.PetShop.repository.Article;
 import com.example.PetShop.repository.ArticleRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -16,11 +17,12 @@ public class ArticleService {
     }
 
     private final ArticleRepository articleRepository;
-
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public List<Article> getArticles() {
         return articleRepository.findAll();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     public Article createArticle(Article article) {
         Optional<Article> optionalArticle =  articleRepository.findBySku(article.getSku());
         if (optionalArticle.isPresent()) {
@@ -28,7 +30,7 @@ public class ArticleService {
         }
         return this.articleRepository.save(article);
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     public void delete(Long id) {
         Optional<Article> ById = articleRepository.findById(id);
         if (ById.isEmpty()) {
@@ -36,7 +38,7 @@ public class ArticleService {
         }
         articleRepository.deleteById(id);
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     public void update(Long id, String sku, String title, String description, Integer price) {
         Optional<Article> ById = articleRepository.findById(id);
         if (ById.isEmpty()) {
